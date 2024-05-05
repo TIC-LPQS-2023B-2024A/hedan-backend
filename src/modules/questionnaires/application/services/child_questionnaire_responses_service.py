@@ -4,20 +4,20 @@ from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.application.dtos.register_child_response_dto import RegisterChildResponseDto, \
     RegisterChildResponseAnswerDtoMapper
 from src.modules.questionnaires.application.interfaces.repositories.children_repository_async import \
-    ChildrenRepositoryAsync
+    AbstractChildrenRepositoryAsync
 from src.modules.questionnaires.application.interfaces.repositories.psychologists_repository_async import \
-    PsychologistsRepositoryAsync
+    AbstractPsychologistsRepositoryAsync
 from src.modules.questionnaires.application.interfaces.repositories.questionnaire_responses_repository_async import \
-    QuestionnaireResponsesRepositoryAsync
+    AbstractQuestionnaireResponsesRepositoryAsync
 from src.modules.questionnaires.domain.services.questionnaires_service import QuestionnairesService
 
 
 class ChildQuestionnaireResponsesService:
     def __init__(
             self,
-            psychologist_repository: Inject[PsychologistsRepositoryAsync],
-            children_repository: Inject[ChildrenRepositoryAsync],
-            questionnaire_responses_repository: Inject[QuestionnaireResponsesRepositoryAsync]
+            psychologist_repository: Inject[AbstractPsychologistsRepositoryAsync],
+            children_repository: Inject[AbstractChildrenRepositoryAsync],
+            questionnaire_responses_repository: Inject[AbstractQuestionnaireResponsesRepositoryAsync]
     ):
         self.__psychologist_repository = psychologist_repository
         self.__children_repository = children_repository

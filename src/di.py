@@ -2,18 +2,19 @@ from fastapi_injector import request_scope
 from injector import Injector, singleton
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
+# DB SqlAlchemy
 from src.common.infrastructure.repositories.sqlachemy.db import create_async_session
-# Repositories Interfaces
+# Abstract Repositories
 from src.modules.questionnaires.application.interfaces.repositories.children_repository_async import \
-    ChildrenRepositoryAsync as IChildrenRepositoryAsync
+    AbstractChildrenRepositoryAsync
 from src.modules.questionnaires.application.interfaces.repositories.psychologists_repository_async import \
-    PsychologistsRepositoryAsync as IPsychologistsRepositoryAsync
+    AbstractPsychologistsRepositoryAsync
 from src.modules.questionnaires.application.interfaces.repositories.questionnaire_responses_repository_async import \
-    QuestionnaireResponsesRepositoryAsync as IQuestionnaireResponsesRepositoryAsync
+    AbstractQuestionnaireResponsesRepositoryAsync
 # Services
 from src.modules.questionnaires.application.services.child_questionnaire_responses_service import \
     ChildQuestionnaireResponsesService
-# Helpers Interfaces
+# Abstract Helpers
 # ---
 # Repositories Implementations
 from src.modules.questionnaires.infrastructure.repositories.sqlachemy.children_repository_async import \
@@ -34,10 +35,16 @@ def add_database(injector: Injector) -> Injector:
 
 
 def add_repositories(injector: Injector) -> Injector:
-    injector.binder.bind(IChildrenRepositoryAsync, to=SqlAlchemyChildrenRepositoryAsync, scope=request_scope)
-    injector.binder.bind(IQuestionnaireResponsesRepositoryAsync, to=SqlAlchemyQuestionnaireResponseRepositoryAsync,
+    injector.binder.bind(AbstractChildrenRepositoryAsync, to=SqlAlchemyChildrenRepositoryAsync, scope=request_scope)
+    injector.binder.bind(AbstractQuestionnaireResponsesRepositoryAsync,
+                         to=SqlAlchemyQuestionnaireResponseRepositoryAsync,
                          scope=request_scope)
-    injector.binder.bind(IPsychologistsRepositoryAsync, to=SqlAlchemyPsychologistsRepositoryAsync, scope=request_scope)
+    injector.binder.bind(AbstractPsychologistsRepositoryAsync, to=SqlAlchemyPsychologistsRepositoryAsync,
+                         scope=request_scope)
+    return injector
+
+
+def add_daos(injector: Injector) -> Injector:
     return injector
 
 

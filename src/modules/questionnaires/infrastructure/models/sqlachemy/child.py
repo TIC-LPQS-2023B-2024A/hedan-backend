@@ -16,14 +16,13 @@ class ChildModel(Base):
     cedula: Mapped[str] = mapped_column(String(10), primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     sex: Mapped[str] = mapped_column(String(1))
-    psychologist_id: Mapped[int] = mapped_column(ForeignKey("psychologist.cedula"))
+    psychologist_id: Mapped[str] = mapped_column(ForeignKey("psychologist.cedula"))
     psychologist: Mapped["PsychologistModel"] = relationship("PsychologistModel", back_populates="children")
     questionnaire_responses: Mapped[List[QuestionnaireResponseModel]] = relationship("QuestionnaireResponseModel",
                                                                                      back_populates="child")
 
 
 class ChildDataMapper:
-
     @staticmethod
     def model_to_entity(instance: ChildModel) -> Child:
         child = Child(

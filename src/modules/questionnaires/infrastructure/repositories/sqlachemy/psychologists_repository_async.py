@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.application.interfaces.repositories.psychologists_repository_async import \
-    PsychologistsRepositoryAsync as IPsychologistsRepositoryAsync
+    AbstractPsychologistsRepositoryAsync as IPsychologistsRepositoryAsync
 from src.modules.questionnaires.domain.entities.psychologist import Psychologist
 from src.modules.questionnaires.infrastructure.models.sqlachemy.psychologist import PsychologistModel, \
     PsychologistDataMapper

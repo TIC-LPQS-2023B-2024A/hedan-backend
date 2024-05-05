@@ -5,7 +5,7 @@ from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.domain.entities.psychologist import Psychologist
 
 
-class PsychologistsRepositoryAsync(ABC):
+class AbstractPsychologistsRepositoryAsync(ABC):
     @abstractmethod
     async def get_by_id_async(self, psychologist_cedula: Cedula) -> Optional[Psychologist]:
         pass

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.application.interfaces.repositories.questionnaire_responses_repository_async import \
-    QuestionnaireResponsesRepositoryAsync as IQuestionnaireResponseRepositoryAsync
+    AbstractQuestionnaireResponsesRepositoryAsync as IQuestionnaireResponseRepositoryAsync
 from src.modules.questionnaires.domain.entities.questionnaire_response import QuestionnaireResponse
 from src.modules.questionnaires.infrastructure.models.sqlachemy.questionnaire_response import \
     QuestionnaireResponseModel, QuestionnaireResponseDataMapper

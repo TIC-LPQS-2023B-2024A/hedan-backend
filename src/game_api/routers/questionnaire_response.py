@@ -5,7 +5,7 @@ from src.modules.questionnaires.application.dtos.register_child_response_dto imp
 from src.modules.questionnaires.application.services.child_questionnaire_responses_service import \
     ChildQuestionnaireResponsesService
 
-questionnaire_response_router = APIRouter(prefix="/questionnaire-responses")
+questionnaire_response_router = APIRouter(prefix="/questionnaire-responses", tags=["questionnaire_response"])
 
 
 @questionnaire_response_router.post("/", response_model=RegisterChildResponseDto)

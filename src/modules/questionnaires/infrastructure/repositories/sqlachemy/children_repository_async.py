@@ -6,12 +6,12 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.application.interfaces.repositories.children_repository_async import \
-    ChildrenRepositoryAsync as IChildrenRepositoryAsync
+    AbstractChildrenRepositoryAsync
 from src.modules.questionnaires.domain.entities.child import Child
 from src.modules.questionnaires.infrastructure.models.sqlachemy.child import ChildModel, ChildDataMapper
 
 
-class ChildrenRepositoryAsync(IChildrenRepositoryAsync):
+class ChildrenRepositoryAsync(AbstractChildrenRepositoryAsync):
     def __init__(self, async_session_factory: Inject[async_sessionmaker[AsyncSession]]):
         self.__async_session_factory = async_session_factory
 

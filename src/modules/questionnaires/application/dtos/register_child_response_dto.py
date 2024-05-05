@@ -13,7 +13,6 @@ class RegisterChildResponseAnswerDto:
 
 
 class RegisterChildResponseAnswerDtoMapper:
-
     @staticmethod
     def to_domain_answer(dto: RegisterChildResponseAnswerDto) -> Answer:
         return Answer(
@@ -32,6 +31,9 @@ class RegisterChildResponseDto:
     reason: str
     referrer: str
     answers: list[RegisterChildResponseAnswerDto]
+
+    def __post_init__(self):
+        self._validate()
 
     def _validate(self):
         self._validate_answers()

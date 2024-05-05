@@ -5,7 +5,7 @@ from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.domain.entities.questionnaire_response import QuestionnaireResponse
 
 
-class QuestionnaireResponsesRepositoryAsync(ABC):
+class AbstractQuestionnaireResponsesRepositoryAsync(ABC):
     @abstractmethod
     async def register_psychologist_child_questionnaire_response_async(
             self,
