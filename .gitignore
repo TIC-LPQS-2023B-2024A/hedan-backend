@@ -198,4 +198,7 @@ pyrightconfig.json
 .history
 .ionide
 
+# Alembic
+alembic.ini
+
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,jetbrains,pycharm
