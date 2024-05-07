@@ -1,12 +1,12 @@
-from dataclasses import dataclass
 from datetime import timedelta
+
+from pydantic import BaseModel, field_validator
 
 from src.modules.questionnaires.domain.value_objects.answer import Answer
 from src.modules.questionnaires.domain.value_objects.question_id import QuestionId
 
 
-@dataclass(kw_only=True)
-class RegisterChildResponseAnswerDto:
+class RegisterChildResponseAnswerDto(BaseModel):
     question_id: int
     answer: bool
     time_taken: int
@@ -22,8 +22,7 @@ class RegisterChildResponseAnswerDtoMapper:
         )
 
 
-@dataclass(kw_only=True)
-class RegisterChildResponseDto:
+class RegisterChildResponseDto(BaseModel):
     child_cedula: str
     psychologist_cedula: str
     child_age: int
@@ -32,17 +31,16 @@ class RegisterChildResponseDto:
     referrer: str
     answers: list[RegisterChildResponseAnswerDto]
 
-    def __post_init__(self):
-        self._validate()
-
-    def _validate(self):
-        self._validate_answers()
-        self._validate_child_age()
-
-    def _validate_answers(self):
-        if len(self.answers) != 49:
+    @field_validator("answers")
+    @classmethod
+    def validate_answers(cls, v: list[RegisterChildResponseAnswerDto]) -> list[RegisterChildResponseAnswerDto]:
+        if len(v) != 49:
             raise ValueError("Answers must be 49")
+        return v
 
-    def _validate_child_age(self):
-        if self.child_age < 6 or self.child_age > 8:
+    @field_validator("child_age")
+    @classmethod
+    def validate_child_age(cls, v: int) -> int:
+        if v < 6 or v > 8:
             raise ValueError("Child age must be between 6 and 8")
+        return v
