@@ -5,20 +5,21 @@ from fastapi_injector import Injected
 from fastapi_jwt import JwtAuthorizationCredentials
 from mediatr import Mediator
 
-from src.common.api.authorization import admin_only_async
+from src.common.api.authorization import admin_only
 from src.common.infrastructure.token.access_security import access_security
+from src.modules.patients.api.psychologist.psychologist_dto import PsychologistDto
+from src.modules.patients.application.interactors.get_psychologists.get_psychologist_list_query import \
+    GetPsychologistListQuery
 from src.modules.patients.application.interactors.get_psychologists.get_psychologist_response import \
-    GetPsychologistResponse
+    GetPsychologistListResponse
+from src.modules.patients.domain.psychologist.psychologist import Psychologist
 
-router = APIRouter(prefix="/psychologists", tags=["psychologists"])
+router = APIRouter(prefix="/psychologists", tags=["psychologists"], dependencies=[Security(access_security), Security(admin_only)])
 
 
-@router.get("/")
-@admin_only_async
+@router.get("/all", response_model=List[GetPsychologistListResponse])
 async def get_psychologists(
         mediator: Mediator = Injected(Mediator),
-        credentials: JwtAuthorizationCredentials = Security(access_security)
-) -> List[GetPsychologistResponse]:
-    #TODO: Implementar listado de psicólogos
-    return []
-    pass
+) -> List[PsychologistDto]:
+    query = GetPsychologistListQuery()
+    return await mediator.send_async(query)
