@@ -28,19 +28,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('cedula'),
     schema='patients'
     )
-    op.create_table('test_sessions',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('child_id', sa.Integer(), nullable=False),
-    sa.Column('psychologist_cedula', sa.String(), nullable=False),
-    sa.Column('child_age', sa.Integer(), nullable=False),
-    sa.Column('scholar_grade', sa.Integer(), nullable=False),
-    sa.Column('date_time_of_answer', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
-    sa.Column('answers', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
-    sa.Column('test_results', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('child_id'),
-    schema='questionnaires'
-    )
     op.create_table('test_reports',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('child_id', sa.Integer(), nullable=False),
