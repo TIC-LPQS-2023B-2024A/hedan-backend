@@ -15,9 +15,13 @@ from src.modules.patients.api.routers import routers
 from src.modules.patients.application.integration_events_handlers.integration_events_handlers import event_handlers
 from src.modules.patients.application.interactors.ejemplo_get_psychologist_name.psychologist_name_query_service import \
     PsychologistNameQueryService
+from src.modules.patients.application.interactors.get_children.get_children_query_service import ChildrenQueryService
 from src.modules.patients.application.interactors.handlers import handlers
 from src.modules.patients.domain.child.child_repository_async import ChildRepositoryAsync
 from src.modules.patients.infrastructure.persistence.sqlalchemy.models.child_model import ChildModel
+from src.modules.patients.infrastructure.persistence.sqlalchemy.query_services.sql_alchemy_children_query_service import \
+    SqlAlchemyChildrenQueryService
+
 ChildModel
 from src.modules.patients.infrastructure.persistence.sqlalchemy.models.psychologist_model import PsychologistModel
 PsychologistModel
@@ -41,5 +45,7 @@ class PatientsModule(Module, RouterInstaller):
     @staticmethod
     def __register_services_implementation(injector: Injector):
         injector.binder.bind(PsychologistNameQueryService, to=SqlAlchemyPsychologistNameQueryService,
+                             scope=request_scope)
+        injector.binder.bind(ChildrenQueryService, to=SqlAlchemyChildrenQueryService,
                              scope=request_scope)
         injector.binder.bind(ChildRepositoryAsync, to=SqlAlchemyChildRepositoryAsync, scope=request_scope)

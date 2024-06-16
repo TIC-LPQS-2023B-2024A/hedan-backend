@@ -2,7 +2,7 @@ from injector import Inject
 
 from src.common.application.command_handler import CommandHandler
 from src.common.application.event_bus import EventBus
-from src.modules.patients.application.interactors.ejemplo_add_child.add_child_command import AddChildCommand
+from src.modules.patients.application.interactors.add_child.add_child_command import AddChildCommand
 from src.modules.patients.domain.child.child import Child
 from src.modules.patients.domain.child.child_repository_async import ChildRepositoryAsync
 from src.modules.patients.integration_events.child_added_event import ChildAddedEvent
