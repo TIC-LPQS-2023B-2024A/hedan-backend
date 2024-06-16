@@ -2,6 +2,14 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from src.common.infrastructure.persistence.sqlalchemy.base import Base
 
+#class PsychologistModel(Base):
+#    __tablename__ = "psychologists"
+ #   __table_args__ = {"schema": "patients"}
+#
+ #   cedula: Mapped[str] = mapped_column(primary_key=True)
+  #  name: Mapped[str]
+   # sex: Mapped[str]
+    #email: Mapped[str]
 
 class UserModel(Base):
     __tablename__ = "users"

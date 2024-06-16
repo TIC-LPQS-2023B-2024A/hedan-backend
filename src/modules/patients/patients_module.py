@@ -15,9 +15,17 @@ from src.modules.patients.api.routers import routers
 from src.modules.patients.application.integration_events_handlers.integration_events_handlers import event_handlers
 from src.modules.patients.application.interactors.ejemplo_get_psychologist_name.psychologist_name_query_service import \
     PsychologistNameQueryService
+from src.modules.patients.application.interactors.get_psychologists.get_psychologist_query_service import \
+    PsychologistListQueryService
 from src.modules.patients.application.interactors.handlers import handlers
 from src.modules.patients.domain.child.child_repository_async import ChildRepositoryAsync
+from src.modules.patients.domain.psychologist.psychologist_repository_async import PsychologistRepositoryAsync
 from src.modules.patients.infrastructure.persistence.sqlalchemy.models.child_model import ChildModel
+from src.modules.patients.infrastructure.persistence.sqlalchemy.query_services.sql_alchemy_psychologist_list_query_service import \
+    SqlAlchemyPsychologistListQueryService
+from src.modules.patients.infrastructure.persistence.sqlalchemy.repositories.sql_alchemy_psychologist_repository_async import \
+    SqlAlchemyPsychologistRepositoryAsync
+
 ChildModel
 from src.modules.patients.infrastructure.persistence.sqlalchemy.models.psychologist_model import PsychologistModel
 PsychologistModel
@@ -43,3 +51,5 @@ class PatientsModule(Module, RouterInstaller):
         injector.binder.bind(PsychologistNameQueryService, to=SqlAlchemyPsychologistNameQueryService,
                              scope=request_scope)
         injector.binder.bind(ChildRepositoryAsync, to=SqlAlchemyChildRepositoryAsync, scope=request_scope)
+        injector.binder.bind(PsychologistRepositoryAsync, to=SqlAlchemyPsychologistRepositoryAsync, scope=request_scope)
+        injector.binder.bind(PsychologistListQueryService, to=SqlAlchemyPsychologistListQueryService, scope=request_scope)
