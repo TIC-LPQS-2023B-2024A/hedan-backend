@@ -1,6 +1,16 @@
-from fastapi import APIRouter
+from typing import List
+
+from fastapi import APIRouter, Security
 from fastapi_injector import Injected
+from fastapi_jwt import JwtAuthorizationCredentials
 from mediatr import Mediator
+
+from src.common.api.authorization import admin_only
+from src.common.infrastructure.token.access_security import access_security
+from src.modules.patients.application.interactors.get_psychologists.get_psychologist_list_query import \
+    GetPsychologistListQuery
+from src.modules.patients.application.interactors.get_psychologists.get_psychologist_response import \
+    GetPsychologistListResponse
 
 from src.common.domain.value_objects.cedula import Cedula
 from src.modules.patients.api.psychologist.add_child_dto import AddChildDto
@@ -10,7 +20,15 @@ from src.modules.patients.application.interactors.ejemplo_get_psychologist_name.
 from src.modules.patients.application.interactors.get_children.get_children_query import GetChildrenQuery
 from src.modules.patients.domain.child.scholar_grade import ScholarGrade
 
-router = APIRouter(prefix="/psychologists", tags=["Psychologists"])
+router = APIRouter(prefix="/psychologists", tags=["psychologists"], dependencies=[Security(access_security), Security(admin_only)])
+
+
+@router.get("/", response_model=List[GetPsychologistListResponse])
+async def get_psychologists(
+        mediator: Mediator = Injected(Mediator),
+) -> List[GetPsychologistListResponse]:
+    query = GetPsychologistListQuery()
+    return await mediator.send_async(query)
 
 
 @router.post("/{psychologist_cedula}/add_child")
