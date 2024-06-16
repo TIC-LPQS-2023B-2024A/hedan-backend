@@ -8,3 +8,11 @@ class PsychologistRepositoryAsync(ABC):
     @abstractmethod
     async def add_psychologist(self, psychologist: Psychologist) -> Cedula:
         ...
+
+    @abstractmethod
+    async def get_by_cedula(self, cedula: Cedula) -> Psychologist:
+        pass
+
+    @abstractmethod
+    async def update_psychologist(self, psychologist: Psychologist) -> None:
+        pass

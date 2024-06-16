@@ -1,7 +1,6 @@
 from fastapi import Request
 from fastapi.openapi.models import Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
-from starlette.datastructures import MutableHeaders
 
 
 class AuthCookieMiddleware(BaseHTTPMiddleware):
