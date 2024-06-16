@@ -13,4 +13,6 @@ class AddChildCommand(Command[int]):
     sex: Sex
     birthdate: datetime
     scholar_grade: ScholarGrade
+    test_sender: str
+    test_reason: str
     psychologist_cedula: Cedula

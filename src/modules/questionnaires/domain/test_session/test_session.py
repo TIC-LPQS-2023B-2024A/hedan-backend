@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
+import timestamp
+
 from src.common.domain.aggregate_root import AggregateRoot
 from src.common.domain.value_objects.cedula import Cedula
 from src.modules.questionnaires.domain.test_session.answers_set import AnswerSet
@@ -15,16 +17,21 @@ class TestSession(AggregateRoot[int]):
             child_id: int,
             psychologist_cedula: Cedula,
             child_age: int,
-            scholar_grade: int
+            scholar_grade: int,
+            test_sender: str,
+            test_reason: str
     ):
         self.__id = id
         self.__child_id = child_id
         self.__psychologist_cedula = psychologist_cedula
         self.__child_age = child_age
         self.__scholar_grade = scholar_grade
+        self.__test_sender = test_sender
+        self.__test_reason = test_reason
         self.__date_time_of_answer: Optional[datetime] = None
         self.__answer_set: Optional[AnswerSet] = None
         self.__test_results: Optional[TestResults] = None
+        self.__calculate_test_results_timestamp: Optional[timestamp] = None
 
     @property
     def id(self):
@@ -47,6 +54,18 @@ class TestSession(AggregateRoot[int]):
         return self.__scholar_grade
 
     @property
+    def test_sender(self):
+        return self.__test_sender
+
+    @property
+    def test_reason(self):
+        return self.__test_reason
+
+    @property
+    def test_results(self):
+        return self.__test_results
+
+    @property
     def date_time_of_answer(self):
         return self.__date_time_of_answer
 
@@ -55,8 +74,13 @@ class TestSession(AggregateRoot[int]):
         return self.__answer_set
 
     @property
-    def test_results(self):
-        return self.__test_results
+    def calculate_test_results_timestamp(self):
+        return self.__calculate_test_results_timestamp
+
+    @calculate_test_results_timestamp.setter
+    def calculate_test_results_timestamp(self, calculate_test_results_timestamp):
+        # TODO: check time taken to calculate test results
+        self.__calculate_test_results_timestamp = 0
 
     @answer_set.setter
     def answer_set(self, answer_set: AnswerSet):

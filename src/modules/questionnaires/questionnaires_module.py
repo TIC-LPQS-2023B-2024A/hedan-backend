@@ -1,6 +1,7 @@
 from typing import cast
 
 from fastapi import FastAPI
+from fastapi_injector import request_scope
 from injector import Injector
 from mediatr import Mediator
 
@@ -13,16 +14,28 @@ from src.common.module import Module
 from src.modules.questionnaires.api.routers import routers
 from src.modules.questionnaires.application.integration_events_handlers.integration_events_handlers import \
     event_handlers
+from src.modules.questionnaires.application.interactors.get_test_session_id.get_test_session_id_service import \
+    TestSessionIdQueryService
 from src.modules.questionnaires.application.interactors.handlers import handlers
+from src.modules.questionnaires.domain.test_session.test_session_repository_async import TestSessionRepositoryAsync
+from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.query_services.sql_alchemy_test_session_query_service import \
+    SqlAlchemyTestSessionQueryService
+from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.repositories.sql_alchemy_test_session_async import \
+    SqlAlchemyTestSessionRepositoryAsync
 
 
 class QuestionnairesModule(Module, RouterInstaller):
     @staticmethod
     def install(injector: Injector) -> None:
-        # TODO: Install first the dependency injection services
+        QuestionnairesModule.__register_services_implementation(injector)
         register_mediator_handlers(injector.get(Mediator), handlers)
         register_event_bus_handlers(cast(InMemoryEventBus, injector.get(EventBus)), event_handlers)
 
     @staticmethod
     def install_routers(fast_api_app: FastAPI):
         [fast_api_app.include_router(router) for router in routers]
+
+    @staticmethod
+    def __register_services_implementation(injector: Injector):
+        injector.binder.bind(TestSessionRepositoryAsync, to=SqlAlchemyTestSessionRepositoryAsync, scope=request_scope)
+        injector.binder.bind(TestSessionIdQueryService, to=SqlAlchemyTestSessionQueryService, scope=request_scope)

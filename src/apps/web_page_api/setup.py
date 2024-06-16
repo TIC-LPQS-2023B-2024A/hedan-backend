@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi_injector import attach_injector, InjectorMiddleware
 from injector import Injector
 from starlette.middleware.cors import CORSMiddleware
+
 from src.apps.web_page_api.modules import modules
 from src.common.api.auth_cookie_handler import AuthCookieMiddleware
 from src.common.api.di import add_mediator, add_event_bus
@@ -15,7 +16,7 @@ def create_fast_api_app() -> FastAPI:
     app = FastAPI(
         title="HEDAN Web App API",
         docs_url=os.getenv("DOCS_URL"),
-        redoc_url=os.getenv("REDOC_URL"),
+        redoc_url=os.getenv("REDOC_URL")
     )
     injector = Injector()
     add_mediator(injector)

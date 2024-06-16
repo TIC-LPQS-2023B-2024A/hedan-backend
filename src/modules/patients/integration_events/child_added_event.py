@@ -13,4 +13,6 @@ class ChildAddedEvent(IntegrationEvent):
     sex: Sex
     birthdate: datetime
     scholar_grade: int
+    test_sender: str
+    test_reason: str
     psychologist_cedula: Cedula
