@@ -1,12 +1,13 @@
 from injector import Inject
 from src.common.application.query_handler import QueryHandler
-from src.modules.users_management.application.interactors.get_psychologist_user.get_by_id_psychologist_query import \
+
+from src.modules.patients.application.interactors.get_by_id_psychologist.get_by_id_psychologist_query import \
     GetByIdPsychologistQuery
-from src.modules.users_management.application.interactors.get_psychologist_user.get_by_id_psychologist_service import \
+from src.modules.patients.application.interactors.get_by_id_psychologist.get_by_id_psychologist_service import \
     GetByIdPsychologistService
 
 
-class GetByIdPsychologistUserQueryHandler(QueryHandler[GetByIdPsychologistQuery, str]):
+class GetByIdPsychologistQueryHandler(QueryHandler[GetByIdPsychologistQuery, str]):
     def __init__(
             self,
             get_by_id_psychologist_user_query_service: Inject[GetByIdPsychologistService]

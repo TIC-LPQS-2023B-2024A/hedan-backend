@@ -12,10 +12,6 @@ from src.modules.users_management.api.users.add_psychologist_user_dto import Add
 from src.modules.users_management.api.users.update_psychologist_user_dto import UpdatePsychologistUserDto
 from src.modules.users_management.application.interactors.add_psychologist_user.add_psychologist_user_command import \
     AddPsychologistUserCommand
-from src.modules.users_management.application.interactors.get_psychologist_user.get_by_id_psychologist_query import \
-    GetByIdPsychologistQuery
-from src.modules.users_management.application.interactors.get_psychologist_user.get_by_id_psychologist_response import \
-    GetByIdPsychologistResponse
 from src.modules.users_management.application.interactors.update_psychologist_user.update_psychologist_user_command import \
     UpdatePsychologistUserCommand
 
@@ -54,10 +50,4 @@ async def update_psychologist_user(
     await mediator.send_async(command)
 
 
-@router.get("/psychologists/{cedula}", response_model=GetByIdPsychologistResponse, status_code=status.HTTP_200_OK)
-async def get_psychologist_by_cedula(
-        psychologist_cedula: str,
-        mediator: Mediator = Injected(Mediator),
-):
-    query = GetByIdPsychologistQuery(cedula=psychologist_cedula)
-    return await mediator.send_async(query)
+

@@ -1,9 +1,10 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, Security
 
 from fastapi import APIRouter
 from fastapi_injector import Injected
 from mediatr import Mediator
 
+from src.common.api.authorization import psychologist_with_cedula
 from src.modules.questionnaires.application.interactors.get_test_session_id.get_test_session_id_query import \
     GetTestSessionIdQuery
 from src.modules.questionnaires.application.invitation_link.invitation_link_provider import InvitationLinkProvider
@@ -11,7 +12,7 @@ from src.modules.questionnaires.application.invitation_link.invitation_link_prov
 router = APIRouter(prefix="/questionnaires", tags=["Questionnaires"])
 
 
-@router.get("/token/{child_id}/{psychologist_cedula}")
+@router.get("/token/{child_id}/{psychologist_cedula}", dependencies=[Security(psychologist_with_cedula)])
 async def get_token(child_id: int, psychologist_cedula: int, mediator: Mediator = Injected(Mediator)):
     try:
         # Get test session id for the child

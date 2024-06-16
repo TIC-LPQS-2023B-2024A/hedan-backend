@@ -10,8 +10,6 @@ from src.modules.users_management.api.routers import routers
 from src.modules.users_management.application.hashing.hashing_provider import HashingProvider
 from src.modules.users_management.application.interactors.add_psychologist_user.create_psychologist_user_service import \
     CreatePsychologistUserService
-from src.modules.users_management.application.interactors.get_psychologist_user.get_by_id_psychologist_service import \
-    GetByIdPsychologistService
 from src.modules.users_management.application.interactors.handlers import handlers
 from src.modules.users_management.application.interactors.login.credentials_service import CredentialsService
 from src.modules.users_management.application.interactors.update_psychologist_user.update_psychologist_user_service import \
@@ -20,8 +18,6 @@ from src.modules.users_management.application.token.token_provider import TokenP
 from src.modules.users_management.infrastructure.hashing.bcrypt_hashing_provider import BCryptHashingProvider
 from src.modules.users_management.infrastructure.persistence.sqlalchemy.query_services.sql_alchemy_credentials_service import \
     SqlAlchemyCredentialsService
-from src.modules.users_management.infrastructure.persistence.sqlalchemy.query_services.sql_alchemy_get_by_id_psychologist_user_service import \
-    SQLAlchemyGetByIdPsychologistUserService
 from src.modules.users_management.infrastructure.persistence.sqlalchemy.write_services.sql_alchemy_create_psychologist_user_service import \
     SqlAlchemyCreatePsychologistUserService
 from src.modules.users_management.infrastructure.persistence.sqlalchemy.write_services.sql_alchemy_update_psychologist_user_service import \
@@ -47,9 +43,6 @@ class UsersManagementModule(Module, RouterInstaller):
                              scope=request_scope)
         injector.binder.bind(UpdatePsychologistUserService, to=SqlAlchemyUpdatePsychologistUserService,
                              scope=request_scope)
-        injector.binder.bind(GetByIdPsychologistService, to=SQLAlchemyGetByIdPsychologistUserService,
-                             scope=request_scope)
-
 
     @staticmethod
     def __register_providers(injector: Injector):
