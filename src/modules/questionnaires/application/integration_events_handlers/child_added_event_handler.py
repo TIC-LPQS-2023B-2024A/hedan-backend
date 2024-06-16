@@ -29,13 +29,17 @@ class ChildAddedEventHandler(IntegrationEventHandler[ChildAddedEvent, None]):
 
     async def handle(self, event: ChildAddedEvent) -> int:
         # Generate test session id to associate with invitation link
+        print("test sender: ", event.test_sender)
+        print("test reason: ", event.test_reason)
         test_id = await self.repository.add_test_session(
             TestSession(
                 id=0,
                 child_id=event.child_id,
                 psychologist_cedula=event.psychologist_cedula,
                 child_age=years_difference(event.birthdate.strftime("%Y-%m-%d")),
-                scholar_grade=event.scholar_grade
+                scholar_grade=event.scholar_grade,
+                test_sender=event.test_sender,
+                test_reason=event.test_reason
             )
         )
         return test_id

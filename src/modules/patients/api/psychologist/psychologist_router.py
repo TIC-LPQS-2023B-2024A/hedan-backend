@@ -20,6 +20,8 @@ async def add_child(psychologist_cedula: str, add_child_dto: AddChildDto, mediat
         sex=add_child_dto.sex,
         birthdate=add_child_dto.birthdate,
         scholar_grade=ScholarGrade(add_child_dto.scholar_grade),
+        test_sender=add_child_dto.test_sender,
+        test_reason=add_child_dto.test_reason,
         psychologist_cedula=Cedula(psychologist_cedula)
     )
     return await mediator.send_async(command)

@@ -35,6 +35,8 @@ class AddChildCommandHandler(CommandHandler[AddChildCommand, int]):
                 sex=command.sex,
                 birthdate=command.birthdate,
                 scholar_grade=int(command.scholar_grade),
+                test_sender=command.test_sender,
+                test_reason=command.test_reason,
                 psychologist_cedula=command.psychologist_cedula
             )
         )

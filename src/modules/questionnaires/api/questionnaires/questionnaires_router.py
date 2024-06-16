@@ -26,7 +26,6 @@ async def get_token(child_id: int, psychologist_cedula: int, mediator: Mediator 
         else:
             # Generate invitation link
             token = InvitationLinkProvider.generate_token(test_session_id)
-            print(token)
             return f"http://127.0.0.1:8001/?token={token}"
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

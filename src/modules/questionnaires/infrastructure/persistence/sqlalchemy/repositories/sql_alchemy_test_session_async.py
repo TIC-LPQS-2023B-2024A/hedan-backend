@@ -15,7 +15,9 @@ class SqlAlchemyTestSessionRepositoryAsync(TestSessionRepositoryAsync):
             child_id=test_session.child_id,
             psychologist_cedula=str(test_session.psychologist_cedula),
             child_age=test_session.child_age,
-            scholar_grade=test_session.scholar_grade
+            scholar_grade=test_session.scholar_grade,
+            test_sender=test_session.test_sender,
+            test_reason=test_session.test_reason
         )
 
         async with self.__async_session_factory() as session:
