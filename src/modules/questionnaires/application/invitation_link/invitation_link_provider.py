@@ -1,10 +1,9 @@
-# application/invitation_link/invitation_link_provider.py
 import os
 
 import jwt
 from datetime import datetime, timedelta, timezone
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("INVITATION_LINK_SECRET_KEY")
 
 
 class InvitationLinkProvider:
