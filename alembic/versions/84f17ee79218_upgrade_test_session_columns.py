@@ -1,7 +1,7 @@
 """upgrade_test_session_columns
 
 Revision ID: 84f17ee79218
-Revises: 01eab72f358e
+Revises: cdf38d148e35
 Create Date: 2024-06-16 13:09:59.527144
 
 """
@@ -13,7 +13,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = '84f17ee79218'
-down_revision: Union[str, None] = '01eab72f358e'
+down_revision: Union[str, None] = 'cdf38d148e35'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
