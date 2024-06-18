@@ -26,7 +26,7 @@ async def login(login_dto: LoginDto, mediator: Mediator = Injected(Mediator)):
         token = await mediator.send_async(command)
         response = JSONResponse(content={"accessToken": token})
         response.set_cookie(key="accessToken", value=token, httponly=True, secure=True,
-                            samesite="None",
+                            samesite="none",
                             expires=int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")) * 60)
         return response
     except InvalidCredentialsException:
@@ -36,5 +36,6 @@ async def login(login_dto: LoginDto, mediator: Mediator = Injected(Mediator)):
 @router.post("/logout", dependencies=[Security(access_security)])
 async def logout():
     response = JSONResponse(content=None)
-    response.set_cookie(key="accessToken",value="", expires=0)
+    response.set_cookie(key="accessToken", value="", expires=0, httponly=True, secure=True,
+                            samesite="none",)
     return response
