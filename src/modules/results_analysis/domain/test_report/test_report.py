@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from src.common.domain.aggregate_root import AggregateRoot
 from src.common.domain.value_objects.cedula import Cedula
@@ -15,7 +15,8 @@ class TestReport(AggregateRoot[int]):
             child_age: int,
             scholar_grade: int,
             date_time_of_answer: datetime,
-            test_results: TestResults
+            test_results: TestResults,
+            time_taken: timedelta
     ):
         self.__id = id
         self.__child_id = child_id
@@ -25,6 +26,7 @@ class TestReport(AggregateRoot[int]):
         self.__scholar_grade = scholar_grade
         self.__date_time_of_answer = date_time_of_answer
         self.__test_results = test_results
+        self.__time_taken = time_taken
 
     @property
     def id(self) -> int:
@@ -57,3 +59,7 @@ class TestReport(AggregateRoot[int]):
     @property
     def test_results(self) -> TestResults:
         return self.__test_results
+
+    @property
+    def time_taken(self) -> timedelta:
+        return self.__time_taken
