@@ -16,6 +16,7 @@ class SqlAlchemyTestSessionRepositoryAsync(TestSessionRepositoryAsync):
             psychologist_cedula=str(test_session.psychologist_cedula),
             child_age=test_session.child_age,
             scholar_grade=test_session.scholar_grade,
+            child_sex=test_session.child_sex,
             test_sender=test_session.test_sender,
             test_reason=test_session.test_reason
         )

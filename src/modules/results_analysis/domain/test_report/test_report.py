@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from src.common.domain.aggregate_root import AggregateRoot
 from src.common.domain.value_objects.cedula import Cedula
+from src.common.domain.value_objects.sex import Sex
 from src.modules.results_analysis.domain.test_report.test_results import TestResults
 
 
@@ -14,6 +15,7 @@ class TestReport(AggregateRoot[int]):
             psychologist_cedula: Cedula,
             child_age: int,
             scholar_grade: int,
+            child_sex: Sex,
             date_time_of_answer: datetime,
             test_results: TestResults,
             time_taken: timedelta
@@ -24,6 +26,7 @@ class TestReport(AggregateRoot[int]):
         self.__child_age = child_age
         self.__test_session_id = test_session_id
         self.__scholar_grade = scholar_grade
+        self.__child_sex = child_sex
         self.__date_time_of_answer = date_time_of_answer
         self.__test_results = test_results
         self.__time_taken = time_taken

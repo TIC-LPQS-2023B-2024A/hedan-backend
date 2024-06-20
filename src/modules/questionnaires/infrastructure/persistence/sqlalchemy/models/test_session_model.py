@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, func
+from sqlalchemy import DateTime, func, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -18,6 +18,7 @@ class TestSessionModel(Base):
     psychologist_cedula: Mapped[str]
     child_age: Mapped[int]
     scholar_grade: Mapped[int]
+    child_sex: Mapped[str] = mapped_column(String(1))
     test_sender: Mapped[str]
     test_reason: Mapped[str]
     date_time_of_answer: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=None, nullable=True,
