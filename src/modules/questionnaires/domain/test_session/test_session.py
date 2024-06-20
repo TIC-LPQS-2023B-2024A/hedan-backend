@@ -1,10 +1,12 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 import timestamp
 
 from src.common.domain.aggregate_root import AggregateRoot
 from src.common.domain.value_objects.cedula import Cedula
+from src.common.domain.value_objects.sex import Sex
+from src.modules.questionnaires.domain.test_session.answer_set_already_set_error import AnswerSetAlreadySetError
 from src.modules.questionnaires.domain.test_session.answers_set import AnswerSet
 from src.modules.questionnaires.domain.test_session.cmasr2_calculator import calculate_cmasr2_test_results
 from src.modules.questionnaires.domain.test_session.test_results import TestResults
@@ -18,6 +20,7 @@ class TestSession(AggregateRoot[int]):
             psychologist_cedula: Cedula,
             child_age: int,
             scholar_grade: int,
+            child_sex: Sex,
             test_sender: str,
             test_reason: str
     ):
@@ -26,6 +29,7 @@ class TestSession(AggregateRoot[int]):
         self.__psychologist_cedula = psychologist_cedula
         self.__child_age = child_age
         self.__scholar_grade = scholar_grade
+        self.__child_sex = child_sex
         self.__test_sender = test_sender
         self.__test_reason = test_reason
         self.__date_time_of_answer: Optional[datetime] = None
@@ -52,6 +56,10 @@ class TestSession(AggregateRoot[int]):
     @property
     def scholar_grade(self):
         return self.__scholar_grade
+
+    @property
+    def child_sex(self):
+        return self.__child_sex
 
     @property
     def test_sender(self):
@@ -84,6 +92,9 @@ class TestSession(AggregateRoot[int]):
 
     @answer_set.setter
     def answer_set(self, answer_set: AnswerSet):
+        if self.__answer_set is not None:
+            raise AnswerSetAlreadySetError()
+
         self.__date_time_of_answer = datetime.now()
         self.__answer_set = answer_set
         self.__calculate_test_results()
@@ -92,4 +103,9 @@ class TestSession(AggregateRoot[int]):
         if self.answer_set is None:
             raise ValueError("The answer set is not set")
         else:
-            return calculate_cmasr2_test_results(self.answer_set)
+            self.__test_results = calculate_cmasr2_test_results(self.answer_set)
+
+    @property
+    def time_taken(self) -> timedelta:
+        return timedelta(
+            milliseconds=sum([int(time.time_taken.total_seconds() * 1000) for time in self.__answer_set.answer_list]))

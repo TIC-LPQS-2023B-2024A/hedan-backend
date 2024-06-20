@@ -1,7 +1,7 @@
 import os
+from datetime import datetime, timedelta, timezone
 
 import jwt
-from datetime import datetime, timedelta, timezone
 
 SECRET_KEY = os.getenv("INVITATION_LINK_SECRET_KEY")
 
@@ -23,3 +23,11 @@ class InvitationLinkProvider:
             raise Exception("Token has expired")
         except jwt.InvalidTokenError:
             raise Exception("Invalid token")
+
+    @staticmethod
+    def validate_token(token: str) -> bool:
+        try:
+            jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            return True
+        except jwt.InvalidTokenError:
+            return False

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, func
+from sqlalchemy import DateTime, func, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -18,6 +18,8 @@ class TestReportModel(Base):
     test_session_id: Mapped[int]
     child_age: Mapped[int]
     scholar_grade: Mapped[int]
-    date_time_of_answer: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=None, nullable=True,
+    child_sex: Mapped[str] = mapped_column(String(1))
+    date_time_of_answer: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=None, nullable=False,
                                                           server_default=func.now())
-    test_results: Mapped[TestResults] = mapped_column(JSONB, default=None, nullable=True)
+    test_results: Mapped[dict] = mapped_column(JSONB, default=None, nullable=False)
+    time_taken: Mapped[int] = mapped_column(nullable=False)

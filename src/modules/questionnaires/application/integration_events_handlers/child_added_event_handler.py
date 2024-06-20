@@ -1,17 +1,11 @@
 from datetime import datetime
 
-from fastapi_injector import Injected
 from injector import Inject
-from mediatr import Mediator
 
 from src.common.application.integration_event_handler import IntegrationEventHandler
 from src.modules.patients.integration_events.child_added_event import ChildAddedEvent
-from src.modules.questionnaires.application.interactors.add_test_session.add_test_session_command import \
-    AddTestSessionCommand
 from src.modules.questionnaires.domain.test_session.test_session import TestSession
-from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.models.test_session_model import TestSessionModel
-from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.repositories.sql_alchemy_test_session_async import \
-    SqlAlchemyTestSessionRepositoryAsync
+from src.modules.questionnaires.domain.test_session.test_session_repository_async import TestSessionRepositoryAsync
 
 
 def years_difference(date_string):
@@ -24,7 +18,7 @@ def years_difference(date_string):
 
 
 class ChildAddedEventHandler(IntegrationEventHandler[ChildAddedEvent, None]):
-    def __init__(self, repository: Inject[SqlAlchemyTestSessionRepositoryAsync]):
+    def __init__(self, repository: Inject[TestSessionRepositoryAsync]):
         self.repository = repository
 
     async def handle(self, event: ChildAddedEvent) -> int:
@@ -36,6 +30,7 @@ class ChildAddedEventHandler(IntegrationEventHandler[ChildAddedEvent, None]):
                 psychologist_cedula=event.psychologist_cedula,
                 child_age=years_difference(event.birthdate.strftime("%Y-%m-%d")),
                 scholar_grade=event.scholar_grade,
+                child_sex=event.sex,
                 test_sender=event.test_sender,
                 test_reason=event.test_reason
             )

@@ -3,4 +3,4 @@ from src.modules.questionnaires.domain.test_session.test_results import TestResu
 
 
 def calculate_cmasr2_test_results(answer_set: AnswerSet) -> TestResults:
-    pass
+    return TestResults(0, 0, 0, 0, 0, 0)

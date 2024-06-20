@@ -35,6 +35,7 @@ def upgrade() -> None:
     sa.Column('test_session_id', sa.Integer(), nullable=False),
     sa.Column('child_age', sa.Integer(), nullable=False),
     sa.Column('scholar_grade', sa.Integer(), nullable=False),
+    sa.Column('child_sex', sa.String(length=1), nullable=False),
     sa.Column('date_time_of_answer', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('test_results', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
     sa.PrimaryKeyConstraint('id'),

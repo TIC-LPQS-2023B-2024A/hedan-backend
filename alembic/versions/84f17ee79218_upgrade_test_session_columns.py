@@ -26,6 +26,7 @@ def upgrade() -> None:
     sa.Column('psychologist_cedula', sa.String(), nullable=False),
     sa.Column('child_age', sa.Integer(), nullable=False),
     sa.Column('scholar_grade', sa.Integer(), nullable=False),
+    sa.Column('child_sex', sa.String(length=1), nullable=False),
     sa.Column('test_sender', sa.String(), nullable=False),
     sa.Column('test_reason', sa.String(), nullable=False),
     sa.Column('date_time_of_answer', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
