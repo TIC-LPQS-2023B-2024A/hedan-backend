@@ -21,5 +21,5 @@ class TestReportModel(Base):
     child_sex: Mapped[str] = mapped_column(String(1))
     date_time_of_answer: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=None, nullable=False,
                                                           server_default=func.now())
-    test_results: Mapped[TestResults] = mapped_column(JSONB, default=None, nullable=False)
+    test_results: Mapped[dict] = mapped_column(JSONB, default=None, nullable=False)
     time_taken: Mapped[int] = mapped_column(nullable=False)

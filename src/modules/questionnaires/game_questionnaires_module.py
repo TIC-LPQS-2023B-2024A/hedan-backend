@@ -16,7 +16,7 @@ from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.repositori
 class GameQuestionnairesModule(Module, RouterInstaller):
     @staticmethod
     def install(injector: Injector) -> None:
-        GameQuestionnairesModule.__register_repositories()
+        GameQuestionnairesModule.__register_repositories(injector)
         register_mediator_handlers(injector.get(Mediator), game_handlers)
 
     @staticmethod

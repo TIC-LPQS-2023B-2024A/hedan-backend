@@ -48,6 +48,10 @@ class TestReport(AggregateRoot[int]):
         return self.__child_age
 
     @property
+    def child_sex(self) -> Sex:
+        return self.__child_sex
+
+    @property
     def test_session_id(self) -> int:
         return self.__test_session_id
 
