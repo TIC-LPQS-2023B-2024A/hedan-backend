@@ -1,5 +1,3 @@
-from typing import cast
-
 from fastapi import FastAPI
 from injector import Injector
 from mediatr import Mediator
