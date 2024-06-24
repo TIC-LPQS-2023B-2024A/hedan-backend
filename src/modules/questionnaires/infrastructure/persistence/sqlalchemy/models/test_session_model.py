@@ -5,8 +5,6 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.common.infrastructure.persistence.sqlalchemy.base import Base
-from src.modules.questionnaires.domain.test_session.answer import Answer
-from src.modules.questionnaires.domain.test_session.test_results import TestResults
 
 
 class TestSessionModel(Base):

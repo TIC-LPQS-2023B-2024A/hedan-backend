@@ -22,7 +22,8 @@ class TestSession(AggregateRoot[int]):
             scholar_grade: int,
             child_sex: Sex,
             test_sender: str,
-            test_reason: str
+            test_reason: str,
+            date_time_of_answer: Optional[datetime]
     ):
         self.__id = id
         self.__child_id = child_id
@@ -32,7 +33,7 @@ class TestSession(AggregateRoot[int]):
         self.__child_sex = child_sex
         self.__test_sender = test_sender
         self.__test_reason = test_reason
-        self.__date_time_of_answer: Optional[datetime] = None
+        self.__date_time_of_answer = date_time_of_answer
         self.__answer_set: Optional[AnswerSet] = None
         self.__test_results: Optional[TestResults] = None
         self.__calculate_test_results_timestamp: Optional[timestamp] = None
