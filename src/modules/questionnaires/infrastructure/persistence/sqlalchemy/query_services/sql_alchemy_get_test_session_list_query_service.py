@@ -30,13 +30,10 @@ class SqlAlchemyTestSessionListQueryService(TestSessionListQueryService):
             for test_session, child in rows:
                 test_sessions.append(TestSessionDto(
                     test_id=test_session.id,
-                    child_id=test_session.child_id,
                     child_name=child.name,
-                    psychologist_cedula=test_session.psychologist_cedula,
                     child_age=test_session.child_age,
                     scholar_grade=test_session.scholar_grade,
                     child_sex=test_session.child_sex,
-                    date_time_of_answer=test_session.date_time_of_answer,
-                    answers_set=test_session.answers)
+                    date_time_of_answer=test_session.date_time_of_answer)
                 )
             return test_sessions

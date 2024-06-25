@@ -53,7 +53,8 @@ class SqlAlchemyTestSessionRepositoryAsync(TestSessionRepositoryAsync):
             test_session_model.date_time_of_answer = test_session.date_time_of_answer
             test_session_model.answers = [answer.to_dict() for answer in test_session.answer_set.answer_list]
             test_session_model.test_results = test_session.test_results.to_dict()
-            test_session_model.calculate_test_results_timestamp = test_session.calculate_test_results_timestamp
+            test_session_model.calculate_test_results_time_taken = (test_session.calculate_test_results_time_taken
+                                                                    - 3000000)
 
             await session.commit()
             return test_session

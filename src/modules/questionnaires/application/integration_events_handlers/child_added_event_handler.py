@@ -32,9 +32,7 @@ class ChildAddedEventHandler(IntegrationEventHandler[ChildAddedEvent, None]):
                 scholar_grade=event.scholar_grade,
                 child_sex=event.sex,
                 test_sender=event.test_sender,
-                test_reason=event.test_reason,
-                date_time_of_answer=None
-            )
+                test_reason=event.test_reason)
         )
         return test_id
 

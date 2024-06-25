@@ -32,7 +32,7 @@ class SqlAlchemyTestSessionByIdQueryService(TestSessionByIdQueryService):
                     TestSessionModel.date_time_of_answer,
                     TestSessionModel.answers,
                     TestSessionModel.test_results,
-                    TestSessionModel.calculate_test_results_timestamp,
+                    TestSessionModel.calculate_test_results_time_taken,
                     ChildModel.name.label('child_name')
                 )
                 .join(ChildModel,
