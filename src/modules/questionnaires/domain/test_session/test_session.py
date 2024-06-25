@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-import timestamp
-
 from src.common.domain.aggregate_root import AggregateRoot
 from src.common.domain.value_objects.cedula import Cedula
 from src.common.domain.value_objects.sex import Sex
@@ -35,7 +33,7 @@ class TestSession(AggregateRoot[int]):
         self.__date_time_of_answer: Optional[datetime] = None
         self.__answer_set: Optional[AnswerSet] = None
         self.__test_results: Optional[TestResults] = None
-        self.__calculate_test_results_timestamp: Optional[timestamp] = None
+        self.__calculate_test_results_time_taken: Optional[timedelta] = None
 
     @property
     def id(self):
@@ -82,13 +80,8 @@ class TestSession(AggregateRoot[int]):
         return self.__answer_set
 
     @property
-    def calculate_test_results_timestamp(self):
-        return self.__calculate_test_results_timestamp
-
-    @calculate_test_results_timestamp.setter
-    def calculate_test_results_timestamp(self, calculate_test_results_timestamp):
-        # TODO: check time taken to calculate test results
-        self.__calculate_test_results_timestamp = 0
+    def calculate_test_results_time_taken(self):
+        return self.__calculate_test_results_time_taken
 
     @answer_set.setter
     def answer_set(self, answer_set: AnswerSet):
@@ -97,13 +90,20 @@ class TestSession(AggregateRoot[int]):
 
         self.__date_time_of_answer = datetime.now()
         self.__answer_set = answer_set
+        start_time = datetime.now()
         self.__calculate_test_results()
+        end_time = datetime.now()
+        execution_time_seconds = (end_time - start_time).total_seconds()
+        self.__calculate_test_results_time_taken = int(execution_time_seconds * 1000000)  # microseconds
+        print(self.__calculate_test_results_time_taken)
 
     def __calculate_test_results(self):
         if self.answer_set is None:
             raise ValueError("The answer set is not set")
         else:
             self.__test_results = calculate_cmasr2_test_results(self.answer_set)
+            import time
+            time.sleep(3)
 
     @property
     def time_taken(self) -> timedelta:

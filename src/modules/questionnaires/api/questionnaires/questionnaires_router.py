@@ -7,8 +7,14 @@ from fastapi_injector import Injected
 from mediatr import Mediator
 
 from src.common.api.authorization import psychologist_with_cedula
+from src.common.domain.value_objects.cedula import Cedula
+from src.modules.questionnaires.api.questionnaires.test_session_dto import TestSessionDto
+from src.modules.questionnaires.application.interactors.get_test_Session_by_id.get_test_Session_by_id_query import \
+    GetTestSessionByIdQuery
 from src.modules.questionnaires.application.interactors.get_test_session_id.get_test_session_id_query import \
     GetTestSessionIdQuery
+from src.modules.questionnaires.application.interactors.get_test_session_list.get_test_session_list_query import \
+    GetTestSessionListQuery
 from src.modules.questionnaires.application.invitation_link.invitation_link_provider import InvitationLinkProvider
 
 router = APIRouter(prefix="/questionnaires", tags=["Questionnaires"])
@@ -30,5 +36,27 @@ async def get_token(child_id: int, psychologist_cedula: int, mediator: Mediator 
             # Generate invitation link
             token = InvitationLinkProvider.generate_token(test_session_id)
             return f"{os.getenv("GAME_URL")}/?token={token}"
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/{psychologist_cedula}/test_sessions", dependencies=[Security(psychologist_with_cedula)])
+async def get_test_sessions(psychologist_cedula: int, mediator: Mediator = Injected(Mediator)):
+    try:
+        query = GetTestSessionListQuery(
+            cedula=Cedula(str(psychologist_cedula))
+        )
+        return await mediator.send_async(query)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/resultado/{test_id}")
+async def get_test_sessions(test_id: int, mediator: Mediator = Injected(Mediator)):
+    try:
+        query = GetTestSessionByIdQuery(
+            test_id=test_id
+        )
+        return await mediator.send_async(query)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
