@@ -10,5 +10,7 @@ class TestSessionDto:
     scholar_grade: int
     child_sex: str
     date_time_of_answer: str
+    token: str
+    isTokenValid: bool
 
 

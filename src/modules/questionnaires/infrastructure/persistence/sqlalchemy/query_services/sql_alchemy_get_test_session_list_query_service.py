@@ -8,6 +8,7 @@ from src.modules.questionnaires.application.interactors.get_test_session_list.ge
     GetTestSessionListQuery
 from src.modules.questionnaires.application.interactors.get_test_session_list.get_test_session_list_query_service import \
     TestSessionListQueryService
+from src.modules.questionnaires.application.invitation_link.invitation_link_provider import InvitationLinkProvider
 from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.models.test_session_model import TestSessionModel
 
 
@@ -34,6 +35,9 @@ class SqlAlchemyTestSessionListQueryService(TestSessionListQueryService):
                     child_age=test_session.child_age,
                     scholar_grade=test_session.scholar_grade,
                     child_sex=test_session.child_sex,
-                    date_time_of_answer=test_session.date_time_of_answer)
+                    date_time_of_answer=test_session.date_time_of_answer,
+                    token=test_session.test_token,
+                    isTokenValid=InvitationLinkProvider.validate_token(test_session.test_token)
+                )
                 )
             return test_sessions

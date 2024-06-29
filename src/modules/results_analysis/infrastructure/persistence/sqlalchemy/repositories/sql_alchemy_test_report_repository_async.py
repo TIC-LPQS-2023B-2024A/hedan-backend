@@ -1,4 +1,5 @@
 from injector import Inject
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from src.modules.results_analysis.domain.test_report.test_report import TestReport
@@ -25,3 +26,12 @@ class SqlAlchemyTestReportRepositoryAsync(TestReportRepositoryAsync):
         async with self.__async_session_factory() as session:
             session.add(test_report_model)
             await session.commit()
+
+    async def delete_test_report_by_test_session_id(self, test_session_id):
+        async with self.__async_session_factory() as session:
+            query = select(TestReportModel).filter(TestReportModel.test_session_id == test_session_id)
+            result = await session.execute(query)
+            test_report_model = result.scalars().first()
+            if test_report_model:
+                await session.delete(test_report_model)
+                await session.commit()

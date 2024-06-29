@@ -19,6 +19,7 @@ class TestSessionModel(Base):
     child_sex: Mapped[str] = mapped_column(String(1))
     test_sender: Mapped[str]
     test_reason: Mapped[str]
+    test_token: Mapped[str] = mapped_column(nullable=True)
     date_time_of_answer: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=None, nullable=True)
     answers: Mapped[list[dict]] = mapped_column(JSONB, default=None, nullable=True)
     test_results: Mapped[dict] = mapped_column(JSONB, default=None, nullable=True)

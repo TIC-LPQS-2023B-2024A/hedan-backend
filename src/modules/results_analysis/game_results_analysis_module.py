@@ -11,7 +11,7 @@ from src.common.infrastructure.bus.memory.in_memory_event_bus import InMemoryEve
 from src.common.module import Module
 from src.modules.results_analysis.api.routers import routers
 from src.modules.results_analysis.application.integration_events_handlers.integration_events_handlers import \
-    game_event_handlers
+    game_event_handlers, web_app_event_handlers
 from src.modules.results_analysis.domain.test_report.test_report_repository_async import TestReportRepositoryAsync
 from src.modules.results_analysis.infrastructure.persistence.sqlalchemy.repositories.sql_alchemy_test_report_repository_async import \
     SqlAlchemyTestReportRepositoryAsync
