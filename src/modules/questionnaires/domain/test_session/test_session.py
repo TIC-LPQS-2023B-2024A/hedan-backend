@@ -34,6 +34,7 @@ class TestSession(AggregateRoot[int]):
         self.__answer_set: Optional[AnswerSet] = None
         self.__test_results: Optional[TestResults] = None
         self.__calculate_test_results_time_taken: Optional[timedelta] = None
+        self.__test_token: Optional[str] = None
 
     @property
     def id(self):
@@ -78,6 +79,10 @@ class TestSession(AggregateRoot[int]):
     @property
     def answer_set(self):
         return self.__answer_set
+
+    @property
+    def test_token(self):
+        return self.__test_token
 
     @property
     def calculate_test_results_time_taken(self):

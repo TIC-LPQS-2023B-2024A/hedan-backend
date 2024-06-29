@@ -13,3 +13,10 @@ class TestSessionRepositoryAsync(ABC):
     @abstractmethod
     async def set_answers_set(self, test_session_id: int, answer_set: AnswerSet) -> TestSession:
         pass
+
+    async def set_token(self, test_session_id: int, token: str):
+        pass
+
+    async def delete_test_session_by_id(self, psychologist_cedula: str,
+                                        test_session_id: int) -> bool:
+        pass

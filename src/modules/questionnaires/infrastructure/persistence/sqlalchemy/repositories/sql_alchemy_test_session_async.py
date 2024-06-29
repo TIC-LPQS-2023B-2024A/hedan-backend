@@ -3,7 +3,6 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from src.common.domain.value_objects.cedula import Cedula
-from src.common.domain.value_objects.sex import Sex
 from src.modules.questionnaires.domain.test_session.answers_set import AnswerSet
 from src.modules.questionnaires.domain.test_session.test_session import TestSession
 from src.modules.questionnaires.domain.test_session.test_session_repository_async import TestSessionRepositoryAsync
@@ -29,6 +28,17 @@ class SqlAlchemyTestSessionRepositoryAsync(TestSessionRepositoryAsync):
             session.add(test_model)
             await session.commit()
             return test_model.id
+
+    async def set_token(self, test_session_id: int, token: str):
+        async with self.__async_session_factory() as session:
+            query = select(TestSessionModel).where(TestSessionModel.id == test_session_id)
+            result = await session.execute(query)
+            test_session_model = result.scalars().first()
+            if test_session_model is None:
+                raise ValueError(f"Test session with id {test_session_id} does not exist.")
+            test_session_model.test_token = token
+            print(test_session_model.test_token)
+            await session.commit()
 
     async def set_answers_set(self, test_session_id: int, answer_set: AnswerSet) -> TestSession:
         async with self.__async_session_factory() as session:
@@ -58,3 +68,15 @@ class SqlAlchemyTestSessionRepositoryAsync(TestSessionRepositoryAsync):
 
             await session.commit()
             return test_session
+
+    async def delete_test_session_by_id(self, psychologist_cedula: str, test_session_id: int) -> bool:
+        async with self.__async_session_factory() as session:
+            query = select(TestSessionModel).where(TestSessionModel.id == test_session_id
+                                                   and TestSessionModel.psychologist_cedula == psychologist_cedula)
+            result = await session.execute(query)
+            test_session_model = result.scalars().first()
+            if test_session_model is None:
+                raise ValueError(f"Test session with id {test_session_id} does not exist.")
+            await session.delete(test_session_model)
+            await session.commit()
+            return True

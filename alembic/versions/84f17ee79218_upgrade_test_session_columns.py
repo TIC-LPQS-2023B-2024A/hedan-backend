@@ -29,6 +29,7 @@ def upgrade() -> None:
     sa.Column('child_sex', sa.String(length=1), nullable=False),
     sa.Column('test_sender', sa.String(), nullable=False),
     sa.Column('test_reason', sa.String(), nullable=False),
+    sa.Column('test_token', sa.String(), nullable=True),
     sa.Column('date_time_of_answer', sa.DateTime(timezone=True), nullable=True),
     sa.Column('answers', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
     sa.Column('test_results', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
