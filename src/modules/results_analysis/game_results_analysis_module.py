@@ -17,15 +17,11 @@ from src.modules.results_analysis.infrastructure.persistence.sqlalchemy.reposito
     SqlAlchemyTestReportRepositoryAsync
 
 
-class GameResultsAnalysisModule(Module, RouterInstaller):
+class GameResultsAnalysisModule(Module):
     @staticmethod
     def install(injector: Injector) -> None:
         GameResultsAnalysisModule.__register_repositories(injector)
         register_event_bus_handlers(cast(InMemoryEventBus, injector.get(EventBus)), game_event_handlers)
-
-    @staticmethod
-    def install_routers(fast_api_app: FastAPI):
-        [fast_api_app.include_router(router) for router in routers]
 
     @staticmethod
     def __register_repositories(injector: Injector):

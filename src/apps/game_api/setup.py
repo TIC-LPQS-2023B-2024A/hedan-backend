@@ -3,11 +3,13 @@ import os
 from fastapi import FastAPI
 from fastapi_injector import InjectorMiddleware, attach_injector
 from injector import Injector
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
 from src.apps.game_api.modules import modules
 from src.common.api.di import add_mediator, add_event_bus
 from src.common.api.module_installer import install_modules
+from src.common.infrastructure.logging.logging_middleware import log_request_response
 from src.common.infrastructure.persistence.sqlalchemy.db import add_database
 
 
@@ -30,5 +32,6 @@ def create_fast_api_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(BaseHTTPMiddleware, dispatch=log_request_response)
     attach_injector(app, injector)
     return app
