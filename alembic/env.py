@@ -3,10 +3,12 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from src.common.infrastructure.repositories.sqlachemy.base import Base
-from src.modules.questionnaires.infrastructure.models.sqlachemy.questionnaire_response import QuestionnaireResponseModel
-from src.modules.questionnaires.infrastructure.models.sqlachemy.psychologist import PsychologistModel
-from src.modules.questionnaires.infrastructure.models.sqlachemy.child import ChildModel
+from src.common.infrastructure.persistence.sqlalchemy.base import Base
+from src.modules.patients.infrastructure.persistence.sqlalchemy.models.psychologist_model import PsychologistModel
+from src.modules.patients.infrastructure.persistence.sqlalchemy.models.child_model import ChildModel
+from src.modules.questionnaires.infrastructure.persistence.sqlalchemy.models.test_session_model import TestSessionModel
+from src.modules.results_analysis.infrastructure.persistence.sqlalchemy.models.test_report_model import TestReportModel
+from src.modules.users_management.infrastructure.persistence.sqlalchemy.models.user_model import UserModel
 
 from alembic import context
 
@@ -48,7 +50,7 @@ def run_migrations_offline() -> None:
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
+        dialect_opts={"paramstyle": "named"}
     )
 
     with context.begin_transaction():
@@ -70,7 +72,9 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata,
+            version_table_schema="alembic",
+            include_schemas=True
         )
 
         with context.begin_transaction():

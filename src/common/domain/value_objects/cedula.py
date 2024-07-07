@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
+from src.common.domain.value_object import ValueObject
+
 
 @dataclass(frozen=True)
-class Cedula:
+class Cedula(ValueObject):
     value: str
 
     def __post_init__(self):
@@ -10,6 +12,3 @@ class Cedula:
 
     def __str__(self):
         return self.value
-
-    def __eq__(self, other):
-        return self.value == other.value
