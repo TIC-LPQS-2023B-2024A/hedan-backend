@@ -26,7 +26,7 @@ def create_fast_api_app() -> FastAPI:
     app.add_middleware(InjectorMiddleware, injector=injector)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:4200"],
+        allow_origins=[os.getenv("WEB_APP_URL")],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

@@ -25,7 +25,7 @@ def create_fast_api_app() -> FastAPI:
     app.add_middleware(InjectorMiddleware, injector=injector)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://127.0.0.1:8060"],
+        allow_origins=[os.getenv("GAME_URL")],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
