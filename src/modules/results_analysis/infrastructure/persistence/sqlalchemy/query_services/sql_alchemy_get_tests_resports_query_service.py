@@ -12,8 +12,7 @@ from src.modules.patients.infrastructure.persistence.sqlalchemy.models.psycholog
 from src.modules.results_analysis.api.test_reports.get_test_reports_dto import TestReportsDto
 from src.modules.results_analysis.application.interactors.get_test_response.get_tests_reports_query import \
     GetTestsReportsQuery
-from src.modules.results_analysis.infrastructure.persistence.sqlalchemy.models.get_test_report_model import \
-    GetTestReportModel
+from src.modules.results_analysis.infrastructure.persistence.sqlalchemy.models.test_report_model import TestReportModel
 
 
 class GetTestsReportsQueryService:
@@ -24,12 +23,12 @@ class SqlAlchemyGetTestsReportsQueryService(GetTestsReportsQueryService):
     def __init__(self, async_session_factory: Inject[async_sessionmaker[AsyncSession]]):
         self.__async_session_factory = async_session_factory
 
-    async def execute_async(self, query: GetTestsReportsQuery) -> Optional[list[GetTestReportModel]]:
+    async def execute_async(self, query: GetTestsReportsQuery) -> Optional[list[TestReportsDto]]:
         async with self.__async_session_factory() as session:
             query = (
-                select(GetTestReportModel, ChildModel.name)
-                .join(ChildModel, GetTestReportModel.child_id == ChildModel.id)
-                .where(GetTestReportModel.psychologist_cedula == str(query.psychologist_cedula))
+                select(TestReportModel, ChildModel.name)
+                .join(ChildModel, TestReportModel.child_id == ChildModel.id)
+                .where(TestReportModel.psychologist_cedula == str(query.psychologist_cedula))
             )
             result = await session.execute(query)
             test_reports = []

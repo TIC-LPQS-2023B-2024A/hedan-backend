@@ -14,6 +14,7 @@ class TestReportsDto(BaseModel):
 
     id: int
     child_id: int
+    child_name: str
     psychologist_cedula: str
     test_session_id: int
     child_age: int

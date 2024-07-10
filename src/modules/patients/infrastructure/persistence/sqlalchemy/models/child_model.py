@@ -23,4 +23,4 @@ class ChildModel(Base):
     psychologist: Mapped["PsychologistModel"] = relationship("PsychologistModel", back_populates="children")
 
     #join with table test_report to get chils's name
-    test_reports = relationship("GetTestReportModel", back_populates="child")
+    #+test_reports = relationship("GetTestReportModel", back_populates="child")
