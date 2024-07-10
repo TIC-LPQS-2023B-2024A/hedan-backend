@@ -21,3 +21,6 @@ class ChildModel(Base):
     scholar_grade: Mapped[int] = mapped_column(Integer)
     psychologist_cedula: Mapped[str] = mapped_column(ForeignKey("patients.psychologists.cedula"))
     psychologist: Mapped["PsychologistModel"] = relationship("PsychologistModel", back_populates="children")
+
+    #join with table test_report to get chils's name
+    #+test_reports = relationship("GetTestReportModel", back_populates="child")
